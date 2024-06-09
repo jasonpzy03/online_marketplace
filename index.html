@@ -1,0 +1,155 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>LastMinute - Home</title>
+    <link rel="stylesheet" href="css/styles.css">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <style>
+        body {
+            padding-top: 70px; /* Adjust based on navbar height */
+            background-color: orange;
+        }
+        .navbar {
+            box-shadow: 0 4px 6px -6px #222;
+            background-color: orange;
+        }
+        .navbar-brand, .nav-link {
+            color: white !important;
+        }
+        .container {
+            background-color: white;
+            padding: 20px;
+            border-radius: 10px;
+        }
+        .product-card {
+            border: 1px solid #e0e0e0;
+            border-radius: 10px;
+            padding: 15px;
+            margin-bottom: 20px;
+            text-align: center;
+        }
+        .product-image {
+            height: 150px;
+            object-fit: cover;
+            border-radius: 10px;
+        }
+        .btn-primary {
+            background-color: orange;
+            border-color: orange;
+        }
+        .btn-primary:hover {
+            background-color: darkorange;
+            border-color: darkorange;
+        }
+        .btn-outline-success {
+            color: orange;
+            border-color: orange;
+        }
+        .btn-outline-success:hover {
+            background-color: orange;
+            color: white;
+            border-color: orange;
+        }
+        .form-control {
+            border-color: orange;
+        }
+        .form-control:focus {
+            border-color: darkorange;
+            box-shadow: none;
+        }
+    </style>
+</head>
+<body>
+    <!-- Navbar -->
+    <nav class="navbar navbar-expand-lg fixed-top">
+        <div class="container-fluid">
+            <a class="navbar-brand" href="index.html">LastMinute</a>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav me-auto">
+                    <li class="nav-item">
+                        <a class="nav-link" href="seller.html">Seller Centre</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#">Download</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#">Follow us</a>
+                    </li>
+                </ul>
+                <ul class="navbar-nav ms-auto">
+                    <li class="nav-item">
+                        <a class="nav-link" href="register.html">Notification</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="register.html">Help</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="register.html">Language</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="login.html">Login</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="register.html">Register</a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+   <!-- Search Bar -->
+<div class="container mt-4">
+    <div class="d-flex justify-content-center align-items-center mb-3">
+        <form id="search-form" class="d-flex justify-content-center">
+            <input id="search-input" class="form-control me-2 w-100" type="search" placeholder="Search" aria-label="Search"> <!-- Changed width to w-100 -->
+            <button class="btn btn-outline-success" type="submit">Search</button>
+        </form>
+        <a href="cart.html" class="btn btn-primary ms-3">View Cart</a>
+    </div>
+</div>
+
+
+
+    <!-- Main Content -->
+    <div class="container mt-5">
+        <h1 class="text-center">Welcome to LastMinute Marketplace</h1>
+        
+
+        <!-- Product Grid -->
+        <div class="row row-cols-1 row-cols-md-5 mt-5" id="product-grid">
+            <!-- Products will be generated here by JavaScript -->
+        </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script>
+        // JavaScript to generate product cards
+    const productGrid = document.getElementById('product-grid');
+    for (let i = 0; i < 30; i++) {
+        const productCard = document.createElement('a'); // Change here
+        productCard.href = "item.html"; // Change here
+        productCard.className = 'col';
+        productCard.innerHTML = `
+            <div class="product-card">
+                <img src="https://via.placeholder.com/150" alt="Product Image" class="product-image">
+                <h5>Product Title ${i + 1}</h5>
+                <p>Product description goes here. It provides brief details about the product.</p>
+            </div>
+        `;
+        productGrid.appendChild(productCard);
+    }
+
+        // Handle form submission
+        document.getElementById('search-form').addEventListener('submit', function(event) {
+            event.preventDefault(); // Prevent form submission
+
+            const searchQuery = document.getElementById('search-input').value;
+            if (searchQuery.trim() !== '') {
+                window.location.href = `search.html?q=${searchQuery}`; // Redirect to search.html with the search query
+            }
+        });
+    </script>
+</body>
+</html>
