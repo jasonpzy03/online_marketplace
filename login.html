@@ -9,15 +9,16 @@
     <style>
         body {
             padding-top: 70px; /* Adjust based on navbar height */
-            background-color: orange;
+            background-color: navy;
         }
         .navbar {
             box-shadow: 0 4px 6px -6px #222;
-            background-color: orange;
+            background-color: navy;
         }
         .navbar-brand, .nav-link {
             color: white !important;
         }
+
     </style>
 </head>
 <body>
@@ -53,6 +54,11 @@
                     <li class="nav-item">
                         <a class="nav-link" href="register.html">Register</a>
                     </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="cart.html">
+                            <img src="cartLogo.png" alt="Cart" style="width:30px;height:30px;">
+                        </a>
+                    </li>
                 </ul>
             </div>
         </div>
@@ -74,12 +80,12 @@
                                 <label for="password" class="form-label">Password</label>
                                 <input type="password" class="form-control" id="password" required>
                             </div>
-                            <button type="submit" class="btn btn-primary">Login</button>
+                            <button type="submit" class="btn btn-primary" href="profile.html">Login</button>
                         </form>
                     </div>
                 </div>
-                <p class="text-center mt-3">
-                    Don't have an account? <a href="register.html">Register here</a>
+                <p class="text-center mt-3" style="color: white;"> <!-- Set the text color to white -->
+                    Don't have an account? <a href="register.html" style="color: white;">Register here</a> <!-- Set the text color to white -->
                 </p>
             </div>
         </div>
