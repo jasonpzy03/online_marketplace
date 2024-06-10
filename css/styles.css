@@ -1,0 +1,5 @@
+body {
+    min-height: 100vh;
+    padding-top: 70px; /* Adjust based on navbar height */
+    background-color: rgb(19, 19, 172);
+}

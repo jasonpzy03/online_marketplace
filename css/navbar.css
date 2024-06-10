@@ -1,0 +1,14 @@
+.navbar {
+    box-shadow: 0 4px 6px -6px #222;
+    background-color: navy;
+}
+.navbar-brand, .nav-link {
+    color: white !important;
+}
+
+.navbar-brand, .nav-link {
+    transition: color 0.3s ease;
+}
+.navbar-brand:hover, .nav-link:hover {
+    color: lightblue !important;
+}
