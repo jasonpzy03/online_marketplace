@@ -1,14 +1,19 @@
+<?php 
+
+    require 'mysession.php';
+
+?>
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>LastMinute - Buyer Cart</title>
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
-    <link rel="stylesheet" href="css/styles.css">
-    <link rel="stylesheet" href="css/cart.css?v=1">
-    <link rel="stylesheet" href="css/navbar.css">
-    <link rel="stylesheet" href="css/footer.css">
+    <link rel="stylesheet" href="css/styles.css?v=2">
+    <link rel="stylesheet" href="css/cart.css?v=6">
+    <link rel="stylesheet" href="css/navbar.css?v=4">
+    <link rel="stylesheet" href="css/footer.css?v=5">
     
 </head>
 <body>
@@ -16,12 +21,13 @@
         require 'navbar.php';
         require 'dbconnect.php';
 
-        $sql = "SELECT ProductID, VariationID, Quantity FROM cart WHERE UserID=".$_SESSION['UserID']."";
+        $sql = "SELECT CartID, ProductID, VariationID, Quantity, CartTotal FROM cart WHERE UserID=".$_SESSION['UserID']."";
         $result = mysqli_query($conn, $sql);
         $num_rows = mysqli_num_rows($result);
         $i = 1;
 
         while($row = mysqli_fetch_array($result)) {
+            $CartID[$i] = $row['CartID'];
             $ProductID[$i] = $row['ProductID'];
             $VariationID[$i] = $row['VariationID'];
             $Quantity[$i] = $row['Quantity'];
@@ -51,44 +57,49 @@
 
     ?>
 
-    <div class="container">
-        <h1 class="text-center mt-5">Your Cart</h1>
-        <form id="cart-form" action="payment.php" method="POST">
-            <div class="row mt-3">
+    <div id="blank"></div>
+    <div class="wrapper">
+        <div class="cart">
+            <h1 class="title" >Your Cart</h1>
+            <form id="cart-form" action="cartBackend.php" method="POST">
+
                 <?php 
                     if($num_rows > 0) {
                         for($n = 1; $n < $i; $n++) {
-                            echo '<div class="col-12">
-                            <div class="card">
-                                <div class="row g-0">
-                                    <div class="col-md-4">
-                                        <img src="uploads/'.$VariationImage[$n].'" alt="Product Image" class="img-fluid">
-                                    </div>
-                                    <div class="col-md-8">
-                                        <div class="card-body">
-                                            <h5 class="card-title">'.$ProductName[$n].'</h5>
-                                            <h5 class="card-title">'.$VariationName[$n].'</h5>
-                                            <p class="card-text">Price: '.$VariationPrice[$n].'</p>
-                                            <input type="checkbox" name="product" value="10" class="form-check-input">
-                                        </div>
-                                    </div>
+                            echo '
+                            <div class="product">
+                            <div class="product-img-desc">
+                                <img src="uploads/'.$VariationImage[$n].'" alt="Variation Image">
+                                <div class="product-name-price"> 
+                                    <h5>'.$ProductName[$n].'</h5>
+                                    <h5>'.$VariationName[$n].'</h5>
+                                    <h5>RM '.$VariationPrice[$n].'</h5>
+                                    <h5>x '.$Quantity[$n].'</h5>
                                 </div>
                             </div>
-                        </div>';
+                            <input type="checkbox" name="checkbox[]" value="'.$CartID[$n].'" class="form-check-input">
+                            <div class="actions">
+                                <input name="RemoveCartID" value="'.$CartID[$n].'" hidden>
+                                <button id="removeCart" name="remove-cart" type="submit" onclick="return confirm(\'Are you sure you want to remove this cart?\')">Remove Cart</button>
+                            </div>
+                        </div>
+                            ';
                                     
                         }
+
+                        
                     } else {
-                        echo "<h1>There are no products in your cart.</h1>";
+                        echo "<h5 id='no-product'>There are no products in your cart.</h5>";
                     }
                 ?>
-                
-                
-            </div>
-            <div class="text-center mt-4">
-                <button type="submit" class="btn btn-primary">Pay</button>
-            </div>
-        </form>
+
+                <div class="pay-container">
+                    <button type="submit" name="cart-submit" class="pay-btn">Pay</button>
+                </div>
+            </form>
+        </div>
     </div>
+    
 
     <?php
         require 'footer.php';

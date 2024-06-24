@@ -47,13 +47,9 @@
 
 						setcookie("uid", $row['Username'], time() + 86400);
 						$_SESSION['id'] = session_id();
-						// $_SESSION['pic'] = $row['ProfilePicture'];
 						$_SESSION['UserID'] = $row['UserID'];
-						// $_SESSION['NoTel'] = $row['NoTel'];
-						// $_SESSION['name'] = $row['Nama'];
-						// $_SESSION['NoIC'] = $row['NoKP'];
-						// $_SESSION['userUid'] = $row['Username'];
-						// $_SESSION['mail'] = $row['Emel'];
+						$_SESSION['userUid'] = $row['Username'];
+						$_SESSION['mail'] = $row['Email'];
 						header("Location: index.php?login=success");
 						exit();
 

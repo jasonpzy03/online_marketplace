@@ -9,18 +9,7 @@
     height: 15vh;
 }
 
-.login {
-    border: 1px solid #d9d9d9;
-    padding: 25px;
-    height: 45vh;
-    width: 25vw;
-    background-color: white;
-    display: flex;
-    flex-direction: column;
-    border-radius: 10px;
-}
-
-.login h2 {
+.container h2 {
     margin-bottom: 10px;
 }
 
@@ -36,26 +25,34 @@
     padding: 8px 10px;
 }
 
-.login-form {
+.update-profile-form {
     display: flex;
     flex-direction: column;
     gap: 20px;
 }
 
-.login-btn {
+
+
+.update-profile-btn {
     all:unset;
     background-color: rgb(233,198,129);
     text-align: center;
     border-radius: 5px;
-    margin-top: 50px;
+    margin-top: 20px;
     margin-bottom: 10px;
     padding: 5px 10px;
 }
 
-.login-btn:hover {
+.update-profile-btn:hover {
     cursor: pointer;
 }
 
-.login-nav {
-    font-size: 13px;
+.container {
+    border: 1px solid #d9d9d9;
+    padding: 25px;
+    width: 25vw;
+    background-color: white;
+    display: flex;
+    flex-direction: column;
+    border-radius: 10px;
 }

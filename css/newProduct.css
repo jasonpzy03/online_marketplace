@@ -1,5 +1,119 @@
-.container {
+.wrapper {
+    margin: 0 auto;
+    display: flex;
+    justify-content: center;
+    width: 80%;
+}
+
+.new-product {
+    border: 1px solid #d9d9d9;
+    padding: 25px;
+    width: 50vw;
     background-color: white;
-    padding: 20px;
+    display: flex;
+    flex-direction: column;
     border-radius: 10px;
+}
+
+
+#blank {
+    height: 15vh;
+}
+
+.new-product h2 {
+    margin-bottom: 10px;
+}
+
+.input {
+    display: flex;
+    gap: 5px;
+    flex-direction: column;
+}
+
+.input input, #description, #category {
+    border: 1px solid black;
+    border-radius: 5px;
+    padding: 8px 10px;
+}
+
+hr {
+    margin: 20px 0;
+}
+
+#new-product-form {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+}
+
+#description {
+    height: 200px;
+}
+
+.create-btn {
+    all:unset;
+    background-color: rgb(233,198,129);
+    text-align: center;
+    border-radius: 5px;
+    margin-top: 65px;
+    margin-bottom: 10px;
+    padding: 5px 10px;
+}
+
+.create-btn:hover {
+    cursor: pointer;
+}
+
+#variations {
+    display: flex;
+    flex-wrap: wrap;
+    flex-direction: horizontal;
+    justify-content: center;
+    gap: 30px;
+}
+
+.variation {
+    width: 90%;
+    margin: 0 auto;
+    display: flex;
+    flex-direction: row;
+    gap: 30px;
+}
+
+#remove-variation {
+    all: unset;
+}
+
+#remove-variation img {
+    padding-top: 30px;
+}
+
+#remove-variation:hover {
+    cursor: pointer;
+}
+
+#add-variation {
+    all:unset;
+    background-color: rgb(233,198,129);
+    text-align: center;
+    border-radius: 5px;
+    margin-top: 65px;
+    margin-bottom: 10px;
+    padding: 5px 30px;
+}
+
+#add-variation:hover {
+    cursor: pointer;
+}
+
+/* Chrome, Safari, Edge, Opera */
+input::-webkit-outer-spin-button,
+input::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+
+/* Firefox */
+input[type=number] {
+  -moz-appearance: textfield;
 }

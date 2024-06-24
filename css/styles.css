@@ -1,5 +1,20 @@
+/* Remove default padding and margin for all elements such as p, a, h1 for us to design easier */
+* {
+    padding: 0;
+    margin: 0;
+}
+
+/* Scroll behavior smooth for hyperlinks href*/
+html {
+    scroll-behavior: smooth;
+}
+
+/* Setting up font family, background color, and others */
 body {
-    min-height: 100vh;
-    padding-top: 70px; /* Adjust based on navbar height */
-    background-color: rgb(19, 19, 172);
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    background-color: rgb(228,230,230);
+    line-height: 1.5;
+    overflow: scroll;
+    overflow-x: hidden;
+    overscroll-behavior: none;
 }

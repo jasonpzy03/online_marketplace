@@ -1,6 +1,5 @@
 <?php 
 
-	include("mysession.php");
 	require 'dbconnect.php';
 
 	if(!isset($_GET['ProductID'])) {
@@ -11,7 +10,7 @@
 	$stmt = mysqli_stmt_init($conn);
 
 	if(!mysqli_stmt_prepare($stmt, $sql)) {
-		header("Location: booknow.php?error=sqlerror");
+		header("Location: product.php?error=sqlerror");
 		exit();
 	} else {
 		mysqli_stmt_bind_param($stmt, "i", $_GET['ProductID']);
@@ -34,7 +33,7 @@
 	$stmt = mysqli_stmt_init($conn);
 
     if(!mysqli_stmt_prepare($stmt, $sql)) {
-		header("Location: booknow.php?error=sqlerror");
+		header("Location: product.php?error=sqlerror");
 		exit();
 	} else {
 		mysqli_stmt_bind_param($stmt, "i", $_GET['ProductID']);
@@ -58,78 +57,87 @@
 	
  ?>
  
- <!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>LastMinute - Product Details</title>
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
-    <link rel="stylesheet" href="css/styles.css">
-    <link rel="stylesheet" href="css/navbar.css">
-    <link rel="stylesheet" href="css/footer.css">
+    <link rel="stylesheet" href="css/styles.css?v=2">
+    <link rel="stylesheet" href="css/navbar.css?v=3">
+    <link rel="stylesheet" href="css/footer.css?v=2">
+    <link rel="stylesheet" href="css/product.css?v=3">
     
-    <style>
-        .container {
-            background-color: white;
-            padding: 20px;
-            border-radius: 10px;
-        }
-        .product-image {
-            max-width: 100%;
-            border-radius: 10px;
-        }
-    </style>
 </head>
 <body>
     <?php
         require 'navbar.php';
     ?>
 
+    <div id="blank"></div>
     <!-- Product Details -->
-    <div class="container mt-5">
-        <?php 
-            echo '<h1 class="text-center">'.$ProductName.'</h1>';
-        ?>
-        
-        <div class="row mt-4">
-            <div class="col-md-6">
-                <img src="uploads/<?php echo $ProductImage; ?>" alt="Product Image" class="product-image">
+    <div class="wrapper">
+        <div class="container">
+            <div class="img">
+                <img src="uploads/<?php echo $ProductImage; ?>" width="400px" height="400px" alt="Product Image" class="product-image">
             </div>
-            <div class="col-md-6">
-                <?php
-                    echo '<p>Description: '.$ProductDescription.'</p>
-                    <p>Price: RM '.$VariationPrice[1].'</p>
-                    <p>Stock: '.$VariationStock[1].'</p>';
+        
+        
+            <div class="product-content">
+                <?php 
+                    echo '<h3>'.$ProductName.'</h3>';
                 ?>
-                
-                <form action="addtoCart.php" method="POST">
-                    <div class="mb-3">
+                <div class="price-div">
+                    <?php echo '<p id="price">RM '.$VariationPrice[1].'</p>'; ?>
+                </div>
+    
+                <form class="product-form" action="addtoCart.php" method="POST">
+                    <div class="section">
                         <input type="number" name="ProductID" hidden value="<?php echo htmlspecialchars($_GET['ProductID']); ?>">
                         <label for="variation" class="form-label">Variation</label>
-                        <select class="form-select" name="variation" id="variation" required>
+                        <select onchange="updateInfo()" class="form-select" name="variation" id="variation" required>
                             <?php 
                                 for($n = 1; $n < $i; $n++) {
-                                    echo '<option value="'.$VariationID[$n].'">'.$VariationName[$n].'</option>';
+                                    echo '<option id="variation-option" value="'.$VariationID[$n].'" data-price="'.$VariationPrice[$n].'" data-stock="'.$VariationStock[$n].'"">'.$VariationName[$n].'</option>';
                                 }
                             ?>
+                            
                         </select>
                     </div>
 
-                    <div class="mb-3">
+                    <div class="section">
                         <label for="quantity" class="form-label">Quantity</label>
-                        <input type="number" class="form-control" name="quantity" id="quantity" required>
+                        <input type="number" min="1" value="1" class="form-control" name="quantity" id="quantity" required>
+                        <?php echo '<p id="stock">'.$VariationStock[1].' stocks available.</p>';?>
                     </div>
                     
-                    <button tyoe="submit" name="add-to-cart" class="btn btn-primary">Add to Cart</button>
+                    <button tyoe="submit" name="add-to-cart" class="add-btn">Add to Cart</button>
                 </form>
                 
             </div>
+        </div>
+        <div class="container">
+            <h4>Product Description</h4>
+            <?php
+                echo '<p id="description">'.$ProductDescription.'</p>';
+                    
+            ?>
         </div>
     </div>
 
     <?php
         require 'footer.php';
     ?>
+
+    <script>
+        function updateInfo() {
+            var select = document.getElementById("variation");
+            var selectedOption = select.options[select.selectedIndex];
+            var price = selectedOption.getAttribute("data-price");
+            var stock = selectedOption.getAttribute("data-stock");
+            document.getElementById('price').innerHTML = 'RM ' + price;
+            document.getElementById('stock').innerHTML = stock + ' stocks available.';
+        }
+    </script>
 </body>
 </html>

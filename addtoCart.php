@@ -1,12 +1,13 @@
 <?php 
+    require 'mysession.php';
 
 	if(isset($_POST['add-to-cart'])) {
 
 		require 'dbconnect.php';
-		session_start();
 		$variationID = $_POST['variation'];
 		$productID = $_POST['ProductID'];
 		$quantity = $_POST['quantity'];
+		
 
 		if(empty($variationID) || empty($quantity)) {
 			$_SESSION['error'] = "emptyfields";
@@ -14,7 +15,13 @@
             exit();
 
 		} 
-            $sql = "INSERT INTO cart(UserID, ProductID, VariationID, Quantity) VALUES(?, ?, ?, ?)";
+            $sql = "SELECT VariationPrice FROM variation WHERE VariationID=$variationID";
+            $result = mysqli_query($conn, $sql);
+            $variationPrice = mysqli_fetch_array($result);
+
+            $cartTotal = $quantity * $variationPrice['VariationPrice'];
+
+            $sql = "INSERT INTO cart(UserID, ProductID, VariationID, Quantity, CartTotal) VALUES(?, ?, ?, ?, ?)";
             $stmt = mysqli_stmt_init($conn);
 
             if(!mysqli_stmt_prepare($stmt, $sql)) {
@@ -24,7 +31,7 @@
 
             } else {
                 
-                mysqli_stmt_bind_param($stmt, "iiis", $_SESSION['UserID'], $productID, $variationID, $quantity);
+                mysqli_stmt_bind_param($stmt, "iiiid", $_SESSION['UserID'], $productID, $variationID, $quantity, $cartTotal);
                 mysqli_stmt_execute($stmt);
                 mysqli_stmt_store_result($stmt);
                 $_SESSION['registration'] = "success";

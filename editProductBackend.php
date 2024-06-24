@@ -4,14 +4,23 @@
 
 		require 'dbconnect.php';
 		session_start();
-		$productname = $_POST['name'];
+		$productID= $_POST['productID'];
+		$productname= $_POST['name'];
 		$productdesc = $_POST['description'];
 		$productimage = $_FILES["fileToUpload"]["name"];
 		$productcategory = $_POST['category'];
         
         $variations = [];
+        $variationID = [];
         $prices = [];
         $stocks = [];
+
+        $variationIDs = $_POST['variationID'];
+        $orderTotal = 0;
+
+        foreach ($variationIDs as $varID) {
+            $variationID[] = $varID;
+        }
 
         // Get the total number of variations from the hidden input field
         $totalVariations = isset($_POST['variationCount']) ? intval($_POST['variationCount']) : 0;
@@ -83,27 +92,29 @@
 			$_SESSION['tmp_productdesc'] = $productdesc;
 			$_SESSION['tmp_productimage'] = $productimage;
 			$_SESSION['tmp_productcategory'] = $productcategory;
-            header("Location: newProduct.php?error=emptyfields");
+            header("Location: editProduct.php?productID=".$productID."&error=emptyfields");
             exit();
 
 		} else {
 			
-            $sql = "INSERT INTO product(UserID, ProductName, ProductDescription, ProductCategory, ProductImage) VALUES(?, ?, ?, ?, ?)";
+            $sql = "UPDATE product SET ProductName=?, ProductDescription=?, ProductCategory=?, ProductImage=? WHERE ProductID=?";
             $stmt = mysqli_stmt_init($conn);
 
             if(!mysqli_stmt_prepare($stmt, $sql)) {
                 $_SESSION['error'] = "sqlerror";
-                header("Location: newProduct.php?error=sqlerror1");
+                header("Location: editProduct.php?error=sqlerror1");
                 exit();
 
             } else {
 
-                mysqli_stmt_bind_param($stmt, "issss", $_SESSION['UserID'], $productname, $productdesc, $productcategory, $productimage);
+                mysqli_stmt_bind_param($stmt, "ssssi", $productname, $productdesc, $productcategory, $productimage, $productID);
                 mysqli_stmt_execute($stmt);
                 mysqli_stmt_store_result($stmt);
-                $productid = mysqli_stmt_insert_id($stmt);
+                
+                $sql = "DELETE FROM variation WHERE ProductID=$productID";
+                mysqli_query($conn, $sql);
 
-                $sql = "INSERT INTO variation(ProductID, VariationName, VariationPrice, VariationImage, VariationStock) VALUES(?, ?, ?, ?, ?)";
+                $sql = "INSERT INTO variation(VariationID, ProductID, VariationName, VariationPrice, VariationImage, VariationStock) VALUES(?, ?, ?, ?, ?, ?)";
                 
                 if(!mysqli_stmt_prepare($stmt, $sql)) {
                     $_SESSION['error'] = "sqlerror";
@@ -112,11 +123,13 @@
     
                 } else {
                     for($i = 0; $i < $totalVariations; $i++) {
-                        if ($variations[$i] != null) {
-                            mysqli_stmt_bind_param($stmt, "issss", $productid, $variations[$i], $prices[$i], $productimage, $stocks[$i]);
-                            mysqli_stmt_execute($stmt);
-                            mysqli_stmt_store_result($stmt);
-                        }
+                            if ($variations[$i] != null) {
+                                mysqli_stmt_bind_param($stmt, "iissss", $variationID[$i], $productID, $variations[$i], $prices[$i], $productimage, $stocks[$i]);
+                                mysqli_stmt_execute($stmt);
+                                mysqli_stmt_store_result($stmt);
+                            }
+                            
+
                     }
 
                     header("Location: index.php");
@@ -131,7 +144,7 @@
 
 	} else {
 
-		header("Location: newProduct.php?back=true");
+		header("Location: editProduct.php?back=true");
 
 		exit();
 

@@ -1,6 +1,100 @@
+#blank {
+    height: 15vh;
+}
+
 .container {
     background-color: white;
+    width: 80%;
+    margin: 0 auto;
+    border-radius: 10px;
+    border: 1px solid #d9d9d9;
     padding: 20px;
+}
+
+.add-btn-container {
+    width: 80%;
+    margin: 0 auto;
+    display: flex;
+    justify-content: center;
+}
+
+.add-btn {
+    all:unset;
+    background-color: rgb(233,198,129);
+    text-align: center;
+    width: 50%;
     border-radius: 10px;
     margin-top: 20px;
+    margin-bottom: 10px;
+    padding: 10px 15px;
+}
+
+.add-btn:hover {
+    cursor: pointer;
+}
+
+#deleteProduct {
+    all: unset;
+}
+
+#deleteProduct:hover {
+    cursor: pointer;
+}
+
+.title {
+    text-align: center;
+}
+
+.my-products {
+    margin: 0 auto;
+    display: flex;
+    flex-direction: column;
+    width: 80%;
+}
+
+.product-img-desc {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    width: 80%;
+}
+
+.product-name-price {
+    display: flex;
+    flex-direction: column;
+}
+
+.product-img-desc img {
+    width: 10%;
+    margin: 0 20px;
+}
+
+.product-img-desc h5 {
+    margin-top: 10px;
+}
+
+.actions {
+    width: 10%;
+    margin: 0 20px 0 0;
+}
+
+.actions a {
+    margin: 0 5px;
+    color: black;
+}
+
+.product {
+    border: 1px solid #d9d9d9;
+    border-radius: 10px;
+    margin: 15px 0;
+    height: 150px;
+    display: flex;
+    justify-content: space-between;
+    flex-direction: row;
+    align-items: center;
+}
+
+#no-listing {
+    padding: 50px;
+    text-align: center;
 }

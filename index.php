@@ -4,11 +4,10 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>LastMinute - Home</title>
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
-    <link rel="stylesheet" href="./css/homepage.css?v=2">
-    <link rel="stylesheet" href="./css/navbar.css?v=1">
-    <link rel="stylesheet" href="./css/styles.css?v=1">
-    <link rel="stylesheet" href="./css/footer.css?v=1">
+    <link rel="stylesheet" href="./css/homepage.css?v=9">
+    <link rel="stylesheet" href="./css/navbar.css?v=11">
+    <link rel="stylesheet" href="./css/styles.css?v=2">
+    <link rel="stylesheet" href="./css/footer.css?v=4">
     
 </head>
 <body>
@@ -28,67 +27,102 @@
             $i++;
         }
 
+        for ($n = 1; $n < $i; $n++) {
+            $sql = "SELECT * FROM variation WHERE ProductID=".$ProductID[$n]."";
+            $result = mysqli_query($conn, $sql);
+            $row = mysqli_fetch_array($result);
+            $VariationPrice[$n] = $row['VariationPrice'];
+        }
+        
     ?>
 
-   <!-- Search Bar -->
-   <div class="container mt-4">
-            <div class="d-flex justify-content-center align-items-center mb-3">
-                <div class="header">
-                    <div class="left-side">
-                      <button class="btn btn-outline-success"><a href="#" style="text-decoration: none; color: inherit;">Fesyen</a></button>
-                      <button class="btn btn-outline-success"><a href="#" style="text-decoration: none; color: inherit;">25% Off Voucher</a></button>
-                      <button class="btn btn-outline-success"><a href="#" style="text-decoration: none; color: inherit;">Cash On Delivery</a></button>
-                      <!-- <button class="btn btn-outline-success"><a href="#" style="text-decoration: none; color: inherit;">Hari-Hari Free Shipping</a></button>
-                      <button class="btn btn-outline-success"><a href="#" style="text-decoration: none; color: inherit;">Up to RM150</a></button> -->
+
+    <!-- Advertisement Section -->
+    <div class="ad-section">
+        <div id="slider">
+            <input type="radio" name="slider" id="slide1" checked>
+            <input type="radio" name="slider" id="slide2">
+            <input type="radio" name="slider" id="slide3">
+            <input type="radio" name="slider" id="slide4">
+            <div id="slides">
+                <div id="overflow">
+                    <div class="inner">
+                        <div class="slide slide_1">
+                        <div class="slide-content">
+                            <img src="slides/slides1.jpeg" width="100%" height="100%" alt="">
+                        </div>
+                        </div>
+                        <div class="slide slide_2">
+                        <div class="slide-content">
+                            <img src="slides/slides2.jpeg" width="100%" height="100%" alt="">
+
+                        </div>
+                        </div>
+                        <div class="slide slide_3">
+                        <div class="slide-content">
+                            <img src="slides/slides3.jpeg" width="100%" height="100%" alt="">
+
+                        </div>
+                        </div>
+                        <div class="slide slide_4">
+                        <div class="slide-content">
+                            <img src="slides/slides4.jpeg" width="100%" height="100%" alt="">
+
+                        </div>
                     </div>
-                <form id="search-form" class="d-flex justify-content-center">
-                    <input id="search-input" class="form-control me-2" type="search" placeholder="Search" aria-label="Search">
-                    <button class="btn btn-outline-success" type="submit">Search</button>
-                </form>
-                <div class="right-side">
-                    <button class="btn btn-outline-success"><a href="#" style="text-decoration: none; color: inherit;">50% Off Beauty Deals</a></button>
-                    <button class="btn btn-outline-success"><a href="#" style="text-decoration: none; color: inherit;">Super Seringgit</a></button>
-                    <button class="btn btn-outline-success"><a href="#" style="text-decoration: none; color: inherit;">Global Outlet</a></button>
-                    <!-- <button class="btn btn-outline-success"><a href="#" style="text-decoration: none; color: inherit;">Shopee Supermarket</a></button>
-                    <button class="btn btn-outline-success"><a href="#" style="text-decoration: none; color: inherit;">Shopee Home</a></button>
-                    <button class="btn btn-outline-success"><a href="#" style="text-decoration: none; color: inherit;">Daily Coins & Vouchers</a></button> -->
-                  </div>
+                </div>
             </div>
         </div>
-        
-      </div>
-      
-
-    <!-- Main Content -->
-    <div class="container mt-5">
-        <!-- Advertisement Section -->
-        <div class="ad-section">
-            <img src="ads.jpg" alt="Advertisement">
-            <h2>Special Offers and Promotions</h2>
-            <p>Don't miss out on our exclusive deals and discounts! Shop now and save big on your favorite products.</p>
+        <div id="controls">
+            <label for="slide1"></label>
+            <label for="slide2"></label>
+            <label for="slide3"></label>
+            <label for="slide4"></label>
         </div>
-
+        <div id="bullets">
+            <label for="slide1"></label>
+            <label for="slide2"></label>
+            <label for="slide3"></label>
+            <label for="slide4"></label>
+        </div>
+        </div>
+    </div>
+    <div class="wrapper">
+        <div class="daily-discover">
+            <b>DAILY DISCOVER</b>
+        </div>
         <!-- Product Grid -->
-        <div class="row row-cols-1 row-cols-md-5 mt-5" id="product-grid">
+        
+        <div id="product-grid">
             <?php 
 
                 if($num_rows > 0) {
                     for($n = 1; $n < $i; $n++) {
                         echo "<a href='product.php?ProductID=". $ProductID[$n] ."'>
                                 <div class='product-card'>
-                                        <img src='uploads/".$ProductImage[$n]."' alt='Product Image' class='product-image'>
-                                        <h5>" . $ProductName[$n] . "</h5>
+                                        <div id='product-card-img'>
+                                            <img src='uploads/".$ProductImage[$n]."' alt='Product Image'>
+                                        </div>
+                                        <div class='product-card-wrapper'>
+                                            <p id='product-name'>" . $ProductName[$n] . "</p>
+                                            <p id='product-price'>RM " . $VariationPrice[$n] . "</p>
+                                        </div>
                                 </div>
                             </a>";
                                 
                     }
                 } else {
-                    echo "<h1>There are no products available at the moment.</h1>";
+                    echo "<h5 id='no-product'>There are no products available at the moment.</h5>";
                 }
 
             ?>
         </div>
+        
+        
     </div>
+    
+    
+
 
     <?php
         require 'footer.php';
